@@ -1,0 +1,14 @@
+# Python virtual environment
+.venv/
+miniconda3/
+heatwave_env/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# VS Code settings
+.vscode/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
