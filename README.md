@@ -8,7 +8,7 @@ This project covers the complete data science lifecycle, from initial data explo
 
 ---
 
-##  Methodology & Project Phases
+## Methodology & Project Phases
 
 The project was executed in three main phases:
 
@@ -27,17 +27,18 @@ The project was executed in three main phases:
 
 * **Source:** The dataset was sourced from [Visual Crossing](https://www.visualcrossing.com/), providing daily historical weather data for Vijayawada from September 2024 to September 2025.
 * **Filename:** `Vijayawada24_25.csv`
-* **Key Features Used:** `datetime`, `tempmax`, `tempmin`, `humidity`, `feelslikemax`, `solarradiation`.
+* **Key Features Used:** `datetime`, `tempmax`, `tempmin`, `temp`, `feelslikemax`, `feelslike`, `humidity`, `solarradiation`, and `uvindex`.
 
 ---
 
-## Model Performance (Prototype V1)
+## Model Performance (Tuned Prototype)
 
-A **Random Forest Classifier** was trained to predict the daily alert level. The model was evaluated on a test set (20% of the data) that it had never seen before.
+A **Random Forest Classifier** was trained to predict the daily alert level. To optimize performance, **Hyperparameter Tuning** was conducted using `GridSearchCV` to find the best combination of model settings. The final tuned model was then evaluated on a test set (20% of the data) that it had never seen before.
 
-* **Overall Accuracy:** **75.34%**
-* **Key Finding:** The model performs well in predicting "Normal" and "Heatwave" days. However, the analysis revealed a key challenge with **class imbalance**; the model struggled to predict the rare but most critical "Severe Heatwave" events, achieving a recall of only 25% for that category.
-* **Conclusion:** The prototype successfully proves the viability of the concept. Future work must focus on techniques to improve the model's performance on rare, high-risk events, such as using `class_weight` balancing or gathering more years of data.
+* **Final Tuned Accuracy:** **75.34%**
+* **Best Settings Found:** `{'class_weight': None, 'max_depth': 10, 'min_samples_leaf': 2, 'n_estimators': 200}`
+* **Key Finding:** The model performs well in predicting "Normal" and "Heatwave" days. However, the analysis revealed a key challenge with **class imbalance**; the model still struggled to predict the rare but most critical "Severe Heatwave" events, achieving a recall of only 25% for that category.
+* **Conclusion:** The prototype successfully proves the viability of the concept. Future work must focus on techniques to improve the model's performance on rare, high-risk events, such as using different class weighting strategies or gathering more years of data.
 
 ---
 
@@ -55,8 +56,8 @@ The end-to-end system is designed to be fully automated and cloud-based:
 
 ## Technologies Used
 
-* **Data Analysis:** Python, Pandas, Matplotlib, Seaborn
-* **Machine Learning:** Scikit-learn, LightGBM, Joblib
+* **Data Analysis:** Python, Pandas, NumPy, Matplotlib, Seaborn
+* **Machine Learning:** Scikit-learn, Joblib
 * **Development Environment:** Visual Studio Code, Conda
 * **Collaboration:** Git & GitHub
 
@@ -75,7 +76,10 @@ To replicate this analysis, follow these steps:
     ```bash
     conda create --name heatwave_env python=3.11
     conda activate heatwave_env
-    conda install pandas matplotlib seaborn scikit-learn jupyter joblib lightgbm -c conda-forge
+    conda install pandas numpy matplotlib seaborn scikit-learn jupyter joblib -c conda-forge
     ```
-3.  **Launch the notebook:**
-    Open the `initial_analysis.ipynb` file in VS Code or a Jupyter Notebook environment to view the complete data analysis and model training process.
+3.  **Run the analysis script:**
+    Ensure the `Vijayawada24_25.csv` file is in the same directory. Run the main script from your terminal. The script will generate plots (you will need to close each plot window to proceed) and save the final model files.
+    ```bash
+    python run_analysis.py
+    ```
